@@ -5,6 +5,7 @@ Created on 01/06/2013
 '''
 import unittest
 from bowlinggame.BowlingGame import BowlingGame
+from bowlinggame.Frame import Frame
 
 
 class BowlingGameTest(unittest.TestCase):
@@ -17,7 +18,8 @@ class BowlingGameTest(unittest.TestCase):
         Test that normal scores (no spares or strikes) are
         added normally
         '''
-        self._score_test_helper("12121212121212121212", 30)
+        frames = [Frame(1, 2)] * 10
+        self._score_test_helper(frames, 30)
 
     def test_normal_scoring_other_score(self):
         '''
