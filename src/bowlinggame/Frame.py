@@ -19,7 +19,10 @@ class Frame(object):
         '''
         Returns True if is a spare
         '''
-        return self.first_roll + self.second_roll == 10
+        if not self.is_strike():
+            return self.first_roll + self.second_roll == 10
+        else:
+            return False
     
     def is_strike(self):
         '''
@@ -37,6 +40,11 @@ class Frame(object):
     
     def __ne__(self, other):
         return not self == other
+
+    def __repr__(self):
+        string = "<Frame(" + str(self.first_roll) 
+        string += ", " + str(self.second_roll) + ")>"
+        return string
 
     def __init__(self, first_roll, second_roll):
         '''

@@ -4,29 +4,36 @@ Created on 01/06/2013
 @author: synion
 '''
 from Frame import Frame
-from FrameFactory import FrameFactory
 
 class BowlingGame(object):
     '''
     Calculates score for a bowling game
     '''
 
-    def score(self, score_string):
+    def score(self):
         '''
         Calculates score from a string of rolls
         '''
         total_score = 0
-        last_score = 0
-        for character in score_string:
-            current_score = int(character)
-            total_score += current_score
-            if last_score == current_score:
-                total_score += 5
-            last_score = current_score
+        for index, frame in enumerate(self._frames):
+            if frame.is_spare():
+                total_score += self._frames[index + 1].first_roll
+            elif frame.is_strike():
+                total_score += self._two_next_rolls(index)
+            total_score += frame.total_frame_score()
         return total_score
 
-    def __init__(self):
+    def _two_next_rolls(self, index):
+        '''
+        Calculate the value of the next two rolls
+        '''
+        two_roll_score = self._frames[index + 1].total_frame_score()
+        if self._frames[index + 1].is_strike():
+            two_roll_score += self._frames[index + 2].first_roll
+        return two_roll_score
+
+    def __init__(self, frames):
         '''
         Constructor
         '''
-        pass
+        self._frames = frames

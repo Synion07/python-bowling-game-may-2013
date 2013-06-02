@@ -19,9 +19,7 @@ class FrameFactoryTest(unittest.TestCase):
         '''
         frame_to_convert = "12"
         converted_frame = Frame(1, 2)
-        factory = FrameFactory()
-        frame = factory.build_frame(frame_to_convert)
-        self.assertEqual(converted_frame, frame)
+        self._assert_conversion_is_correct(converted_frame, frame_to_convert)
 
     def test_convert_other_frame(self):
         '''
@@ -29,30 +27,36 @@ class FrameFactoryTest(unittest.TestCase):
         '''
         frame_to_convert = "41"
         converted_frame = Frame(4, 1)
+        self._assert_conversion_is_correct(converted_frame, frame_to_convert)
+        
+    def test_convert_strike(self):
+        '''
+        Convert a strike "X-"
+        '''
+        frame_to_convert = "X-"
+        converted_frame = Frame(10, 0)
+        self._assert_conversion_is_correct(converted_frame, frame_to_convert)
+
+    def _assert_conversion_is_correct(self, converted_frame, frame_to_convert):
+        '''
+        Helper method to assert the conversion is correct
+        '''
         factory = FrameFactory()
         frame = factory.build_frame(frame_to_convert)
         self.assertEqual(converted_frame, frame)
 
-    def test_adds_rolls_correctly(self):
+    def test_full_game_into_frames(self):
         '''
-        The rolls are added correctly
+        Pass a full normal game and check it's
+        correctly converted into frames
         '''
-        frame = Frame(4, 1)
-        self.assertEqual(frame.total_frame_score(), 5)
-
-    def test_detects_a_spare_correctly(self):
-        '''
-        Detects a spare
-        '''
-        frame = Frame(5, 5)
-        self.assertTrue(frame.is_spare())
-
-    def test_detects_a_strike_correctly(self):
-        '''
-        Detects a strike
-        '''
-        frame = Frame(10, 0)
-        self.assertTrue(frame.is_strike())
+        game_string = "00102030405060708090"
+        expected_frames = [Frame(0, 0)] + [Frame(1, 0)] + [Frame(2, 0)]
+        expected_frames += [Frame(3, 0)] + [Frame(4, 0)] + [Frame(5, 0)] 
+        expected_frames += [Frame(6, 0)] + [Frame(7, 0)] + [Frame(8, 0)]
+        expected_frames += [Frame(9, 0)]
+        factory = FrameFactory()
+        self.assertEqual(factory.build_game(game_string), expected_frames)
 
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.test_convert_normal_frames']
