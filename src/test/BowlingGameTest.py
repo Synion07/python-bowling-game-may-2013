@@ -6,6 +6,7 @@ Created on 01/06/2013
 import unittest
 from bowlinggame.BowlingGame import BowlingGame
 from bowlinggame.Frame import Frame
+from bowlinggame.Frame import FinalFrame
 
 
 class BowlingGameTest(unittest.TestCase):
@@ -58,6 +59,45 @@ class BowlingGameTest(unittest.TestCase):
         '''
         frames = [Frame(10, 0)] * 4 + [Frame(0, 0)] * 6
         self._assert_score_equals(frames, 30+30+20+10)
+        
+    def test_mix_spares_and_strikes(self):
+        '''
+        Mix spares and strikes
+        '''
+        frames = [Frame(10, 0)] + [Frame(5, 5)] + [Frame(5, 5)]
+        frames += [Frame(10, 0)] + [Frame(10, 0)] + [Frame(5, 5)]
+        frames += [Frame(5, 0)] + [Frame(0, 0)] * 3
+        self._assert_score_equals(frames, 20+15+20+25+20+15+5)
+
+    def test_final_frame_spare(self):
+        '''
+        Test the final frame acts as expected
+        '''
+        frames = [Frame(0, 0)] * 9 + [FinalFrame(5, 5, 3)]
+        self._assert_score_equals(frames, 13)
+        
+    def test_last_frame_strike(self):
+        '''
+        Second last frame has a strike
+        '''
+        frames = [Frame(0, 0)] * 8 + [Frame(10, 0)]
+        frames += [FinalFrame(2, 3, 0)]
+        self._assert_score_equals(frames, 15+2+3)
+        
+    def test_last_frame_strike_spare(self):
+        '''
+        Second last frame has a strike
+        '''
+        frames = [Frame(0, 0)] * 8 + [Frame(10, 0)]
+        frames += [FinalFrame(7, 3, 3)]
+        self._assert_score_equals(frames, 33)
+        
+    def test_final_frame_strike(self):
+        '''
+        Test the final frame strikes act as expected
+        '''
+        frames = [Frame(0, 0)] * 9 + [FinalFrame(10, 1, 1)]
+        self._assert_score_equals(frames, 12)
 
     def _assert_score_equals(self, frames, expected_score):
         '''
