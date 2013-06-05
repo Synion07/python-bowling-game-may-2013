@@ -47,11 +47,18 @@ class BowlingGame(object):
         '''
         Calculate the value of the next two rolls
         '''
-        next_frame = self._frames[index + 1]
-        total_frame_strike_bonus = next_frame.total_frame_score()
-        if next_frame.is_strike():
-            total_frame_strike_bonus += self._frames[index + 2].first_roll
+        next_index = index + 1
+        total_frame_strike_bonus = self._frames[next_index].total_frame_score()
+        if self._is_strike_but_not_last_frame(next_index):
+            total_frame_strike_bonus += self._frames[next_index + 1].first_roll
         return total_frame_strike_bonus
+    
+    def _is_strike_but_not_last_frame(self, index):
+        '''
+        True if condition meets
+        '''
+        return (self._frames[index].is_strike() 
+                and not self._is_last_frame(index))
 
     def __init__(self, frames):
         '''
