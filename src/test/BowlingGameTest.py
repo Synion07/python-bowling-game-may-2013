@@ -98,6 +98,27 @@ class BowlingGameTest(unittest.TestCase):
         '''
         frames = [Frame(0, 0)] * 9 + [FinalFrame(10, 1, 1)]
         self._assert_score_equals(frames, 12)
+        
+    def test_final_frame_two_strikes(self):
+        '''
+        Two strikes on the final frame
+        '''
+        frames = [Frame(0, 0)] * 9 + [FinalFrame(10, 10, 1)]
+        self._assert_score_equals(frames, 21)
+        
+    def test_final_frame_spare_strike(self):
+        '''
+        Spare + strike on the final frame
+        '''
+        frames = [Frame(0, 0)] * 9 + [FinalFrame(5, 5, 10)]
+        self._assert_score_equals(frames, 20)
+        
+    def test_total_maximum_score(self):
+        '''
+        The 300!
+        '''
+        frames = [Frame(10, 0)] * 9 + [FinalFrame(10, 10, 10)]
+        self._assert_score_equals(frames, 300)
 
     def _assert_score_equals(self, frames, expected_score):
         '''

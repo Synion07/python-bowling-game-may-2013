@@ -3,7 +3,6 @@ Created on 01/06/2013
 
 @author: synion
 '''
-from Frame import FinalFrame
 
 class BowlingGame(object):
     '''
@@ -17,13 +16,12 @@ class BowlingGame(object):
         total_score = 0
         for index, frame in enumerate(self._frames):
             if self._is_last_frame(index):
-                if frame.is_spare():
-                    total_score += frame.spare_bonus()
-                    total_score += frame.total_frame_score()
-                elif frame.is_strike():
+                if frame.is_strike():
                     total_score += 10
                     total_score += frame.strike_bonus()
                 else:
+                    if frame.is_spare():
+                        total_score += frame.spare_bonus()
                     total_score += frame.total_frame_score()
             else:
                 if frame.is_spare():

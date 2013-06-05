@@ -58,12 +58,6 @@ class FinalFrame(Frame):
     The final frame is a boundary case, with three rolls
     '''
     
-    def is_second_roll_strike(self):
-        '''
-        Determines whether the second roll is a strike
-        '''
-        return self.second_roll == 10
-    
     def spare_bonus(self):
         '''
         Final frames are special calculating the bonus
@@ -75,8 +69,6 @@ class FinalFrame(Frame):
         Final frames are special calculating the bonus
         '''
         total_bonus = self.second_roll + self.third_roll
-        if self.is_second_roll_strike():
-            total_bonus += self.third_roll
         return total_bonus
     
     def __repr__(self):

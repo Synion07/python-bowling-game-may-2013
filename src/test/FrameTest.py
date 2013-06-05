@@ -39,6 +39,24 @@ class FrameTest(unittest.TestCase):
         frame = Frame(10, 0)
         self.assertTrue(frame.is_strike())
         self.assertFalse(frame.is_spare())
+    
+    def test_two_different_frames(self):
+        '''
+        Two different frames shouldn't be equal
+        '''
+        frame = Frame(10, 0)
+        other_frame = Frame(10, 0)
+        self.assertTrue(frame == other_frame)
+        self.assertFalse(frame != other_frame)
+    
+    def test_a_Frame_does_not_equal_other_object(self):
+        '''
+        If not a Frame, shouldn't be equals
+        '''
+        frame = Frame(10, 0)
+        other = 'other'
+        self.assertFalse(frame == other)
+        self.assertTrue(frame != other)
 
 
 if __name__ == "__main__":
