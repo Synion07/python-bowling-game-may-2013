@@ -19,9 +19,12 @@ class BowlingGame(object):
             if self._is_last_frame(index):
                 if frame.is_spare():
                     total_score += frame.spare_bonus()
+                    total_score += frame.total_frame_score()
                 elif frame.is_strike():
+                    total_score += 10
                     total_score += frame.strike_bonus()
-                total_score += frame.total_frame_score()
+                else:
+                    total_score += frame.total_frame_score()
             else:
                 if frame.is_spare():
                     total_score += self._spare_bonus(index)
