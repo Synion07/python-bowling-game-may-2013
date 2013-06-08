@@ -7,6 +7,7 @@ import unittest
 from bowlinggame.BowlingGame import BowlingGame
 from bowlinggame.Frame import Frame
 from bowlinggame.Frame import FinalFrame
+from bowlinggame.FrameListBuilder import FrameListBuilder
 
 
 class BowlingGameTest(unittest.TestCase):
@@ -124,7 +125,8 @@ class BowlingGameTest(unittest.TestCase):
         '''
         Helper method to be DRY
         '''
-        game = BowlingGame(frames)
+        builder = FrameListBuilder(frames)
+        game = BowlingGame(builder.build())
         self.assertEqual(game.score(), expected_score)
 
 

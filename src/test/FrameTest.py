@@ -4,7 +4,7 @@ Created on 02/06/2013
 @author: synion
 '''
 import unittest
-from bowlinggame.Frame import Frame
+from bowlinggame.Frame import Frame, LinkedFrame, FinalFrame
 
 class FrameTest(unittest.TestCase):
     '''
@@ -49,7 +49,7 @@ class FrameTest(unittest.TestCase):
         self.assertTrue(frame == other_frame)
         self.assertFalse(frame != other_frame)
     
-    def test_a_Frame_does_not_equal_other_object(self):
+    def test_a_frame_isnt_other_object(self):
         '''
         If not a Frame, shouldn't be equals
         '''
@@ -57,6 +57,40 @@ class FrameTest(unittest.TestCase):
         other = 'other'
         self.assertFalse(frame == other)
         self.assertTrue(frame != other)
+    
+    def test_final_frame_equals(self):
+        '''
+        A FinalFrame is not a Frame!
+        '''
+        frame = Frame(10, 0)
+        final_frame = FinalFrame(10, 0, 0)
+        self.assertFalse(frame == final_frame)
+    
+    def test_a_frame_knows_next_frame(self):
+        '''
+        A LinkedFrame knows about next frame
+        '''
+        next_frame = Frame(10, 0)
+        current_frame = Frame(4, 4)
+        current_frame_linked = LinkedFrame(current_frame, next_frame)
+        self.assertIs(current_frame_linked.next_frame, next_frame)
+        
+    def test_a_frame_knows_if_next(self):
+        '''
+        A LinkedFrame can check for next frame
+        '''
+        next_frame = Frame(10, 0)
+        current_frame = Frame(4, 4)
+        current_frame_linked = LinkedFrame(current_frame, next_frame)
+        self.assertTrue(current_frame_linked.has_next_frame())
+        
+    def test_a_frame_knows_if_not_next(self):
+        '''
+        A LinkedFrame also knows if it doesn't have a next frame
+        '''
+        current_frame = Frame(4, 4)
+        current_frame_linked = LinkedFrame(current_frame)
+        self.assertFalse(current_frame_linked.has_next_frame())
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ Created on 01/06/2013
 '''
 import unittest
 from bowlinggame.FrameFactory import FrameFactory
-from bowlinggame.Frame import Frame
+from bowlinggame.Frame import Frame, FinalFrame
 
 class FrameFactoryTest(unittest.TestCase):
     '''
@@ -54,7 +54,7 @@ class FrameFactoryTest(unittest.TestCase):
         expected_frames = [Frame(0, 0)] + [Frame(1, 0)] + [Frame(2, 0)]
         expected_frames += [Frame(3, 0)] + [Frame(4, 0)] + [Frame(5, 0)] 
         expected_frames += [Frame(6, 0)] + [Frame(7, 0)] + [Frame(8, 0)]
-        expected_frames += [Frame(9, 0)]
+        expected_frames += [FinalFrame(9, 0, 0)]
         factory = FrameFactory()
         self.assertEqual(factory.build_game(game_string), expected_frames)
 
